@@ -1,4 +1,4 @@
-package model;
+package com.example.bfm_test.model;
 
 import java.util.ArrayList;
 

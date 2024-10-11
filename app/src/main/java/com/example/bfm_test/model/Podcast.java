@@ -1,11 +1,13 @@
-package model;
+package com.example.bfm_test.model;
 
 public class Podcast {
     private String title;
 
-    private String subtile;
+    private String subtitle;
     private String type;
     private String source;
+
+    private Data data;;
 
     public String getTitle() {
         return title;
@@ -15,12 +17,12 @@ public class Podcast {
         this.title = title;
     }
 
-    public String getSubtile() {
-        return subtile;
+    public String getSubtitle() {
+        return subtitle;
     }
 
-    public void setSubtile(String subtile) {
-        this.subtile = subtile;
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public String getType() {
@@ -37,5 +39,13 @@ public class Podcast {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 }

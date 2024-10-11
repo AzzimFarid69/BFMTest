@@ -1,8 +1,8 @@
-package service;
+package com.example.bfm_test.service;
 
 import java.util.List;
 
-import model.Podcast;
+import com.example.bfm_test.model.Podcast;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
