@@ -26,7 +26,6 @@ import java.util.Objects;
 public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodcastViewHolder> {
 
     private List<Podcast> podcastList;
-    private Context context;
 
     private MediaPlayer mediaPlayer;
 
@@ -55,7 +54,6 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodcastV
             holder.playButton.setImageResource(R.drawable.play_button);
         }
 
-        Log.d("Podcast" + position, podcast.getSource());
         if (Objects.equals(podcast.getType(), "podcast")) {
             holder.liveStreamHolder.setVisibility(View.GONE);
             holder.podcastHolder.setVisibility(View.VISIBLE);
