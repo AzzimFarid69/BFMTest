@@ -2,27 +2,23 @@ package com.example.bfm_test;
 
 import android.os.Bundle;
 
+import com.example.bfm_test.callback.PodcastCallback;
 import com.example.bfm_test.client.RetrofitClient;
 import com.example.bfm_test.model.Podcast;
+import com.example.bfm_test.repository.PodcastRepository;
 import com.example.bfm_test.service.PodcastService;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bfm_test.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,25 +38,46 @@ public class MainActivity extends AppCompatActivity {
 
     private PodcastAdapter podcastAdapter;
 
+    private LinearLayout errorHolder, loadingHolder;
+
+    private Button refreshButton;
+
+    private PodcastRepository podcastRepository = new PodcastRepository();
+
+    private void displayLoading() {
+        loadingHolder.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        errorHolder.setVisibility(View.GONE);
+    }
+
+    private void displayPodcast(List<Podcast> podcasts) {
+        loadingHolder.setVisibility(View.GONE);
+        errorHolder.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+
+        podcastAdapter = new PodcastAdapter(podcasts);
+        recyclerView.setAdapter(podcastAdapter);
+    }
+
+    private void displayError() {
+        errorHolder.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        loadingHolder.setVisibility(View.GONE);
+    }
+
     private void fetchPodcastData() {
-        PodcastService service = RetrofitClient.getRetrofitInstance().create(PodcastService.class);
-        Call<List<Podcast>> call = service.getPodcast();
-        call.enqueue(new Callback<List<Podcast>>() {
+        displayLoading();
+        podcastRepository.fetchPodcastData(new PodcastCallback() {
             @Override
-            public void onResponse(Call<List<Podcast>> call, Response<List<Podcast>> response) {
-                if (response.isSuccessful()) {
-                    podcasts = response.body();
-                    podcastAdapter = new PodcastAdapter(podcasts);
-                    recyclerView.setAdapter(podcastAdapter);
-                }
+            public void onSuccess(List<Podcast> podcasts) {
+                displayPodcast(podcasts);
             }
 
             @Override
-            public void onFailure(Call<List<Podcast>> call, Throwable t) {
-                Log.e("MainActivity", "Error fetching data: " + t.getMessage());
+            public void onFailure() {
+                displayError();
             }
         });
-
     }
 
     @Override
@@ -72,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        errorHolder = findViewById(R.id.errorHolder);
+        loadingHolder = findViewById(R.id.loadingHolder);
+        refreshButton = findViewById(R.id.refreshBtn);
+
+        refreshButton.setOnClickListener(v -> {
+            fetchPodcastData();
+        });
 
 
         fetchPodcastData();

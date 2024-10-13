@@ -1,10 +1,8 @@
 package com.example.bfm_test;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bfm_test.model.Podcast;
-import com.example.bfm_test.model.PodcastData;
 import com.example.bfm_test.utils.DateUtils;
 import com.squareup.picasso.Picasso;
 
