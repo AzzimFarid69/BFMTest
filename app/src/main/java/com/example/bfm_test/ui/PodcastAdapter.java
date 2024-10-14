@@ -1,9 +1,7 @@
-package com.example.bfm_test;
+package com.example.bfm_test.ui;
 
-import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bfm_test.R;
 import com.example.bfm_test.model.Podcast;
 import com.example.bfm_test.utils.DateUtils;
 import com.squareup.picasso.Picasso;
@@ -47,12 +46,6 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodcastV
     @Override
     public void onBindViewHolder(@NonNull PodcastViewHolder holder, int position) {
         Podcast podcast = podcastList.get(position);
-
-        if (position == currentlyPlayingPosition && mediaPlayer.isPlaying()) {
-            holder.playButton.setImageResource(R.drawable.pause_button);
-        } else {
-            holder.playButton.setImageResource(R.drawable.play_button);
-        }
 
         if (Objects.equals(podcast.getType(), "podcast")) {
             holder.liveStreamHolder.setVisibility(View.GONE);
@@ -118,7 +111,6 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodcastV
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnPreparedListener(mp -> {
                 mp.start();
-                holder.playButton.setImageResource(R.drawable.pause_button);
                 holder.lsButton.setImageResource(R.drawable.play_button);
             });
             mediaPlayer.setOnCompletionListener(mp -> {
@@ -131,8 +123,7 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodcastV
     }
 
     private void resumePodcast(PodcastViewHolder holder) {
-        mediaPlayer.start();
-        holder.playButton.setImageResource(R.drawable.pause_button); // Set to pause icon
+        mediaPlayer.start();// Set to pause icon
     }
 
     private void pausePodcast(PodcastViewHolder holder) {
@@ -153,8 +144,6 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodcastV
             mediaPlayer.setOnPreparedListener(mp -> {
                 mp.start();
                 isPlaying = true;
-                holder.lsButton.setImageResource(R.drawable.pause_button);
-                holder.playButton.setImageResource(R.drawable.pause_button);// Change to pause icon
             });
 
             mediaPlayer.setOnCompletionListener(mp -> {

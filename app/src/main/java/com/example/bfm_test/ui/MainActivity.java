@@ -1,12 +1,11 @@
-package com.example.bfm_test;
+package com.example.bfm_test.ui;
 
 import android.os.Bundle;
 
+import com.example.bfm_test.R;
 import com.example.bfm_test.callback.PodcastCallback;
-import com.example.bfm_test.client.RetrofitClient;
 import com.example.bfm_test.model.Podcast;
 import com.example.bfm_test.repository.PodcastRepository;
-import com.example.bfm_test.service.PodcastService;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,10 +21,6 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
